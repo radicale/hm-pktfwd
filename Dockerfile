@@ -74,11 +74,8 @@ WORKDIR /opt/iotloragateway/packet_forwarder/sx1301
 # hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get -y install \
-        python3-venv \
-        python3-rpi.gpio && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        python3-venv 
+        # python3-rpi.gpio 
 
 # Copy sx1301 packetforwader from builder
 COPY --from=builder /opt/iotloragateway/packetforwarder .
@@ -110,6 +107,17 @@ COPY files/* .
 # Copy venv from builder and update PATH to activate it
 COPY --from=builder /opt/iotloragateway/dev/venv /opt/iotloragateway/dev/venv
 ENV PATH="/opt/iotloragateway/dev/venv/bin:$PATH"
+
+RUN apt-get install wget
+RUN echo "deb http://apt.radxa.com/buster-stable/ buster main" | tee -a /etc/apt/sources.list.d/apt-radxa-com.list
+RUN wget -O - apt.radxa.com/buster-stable/public.key | apt-key add -
+RUN apt-get update && apt-get install -y rockchip-overlay rockpi4-dtbo
+RUN rm /boot/hw_intfc.conf
+COPY hw_intfc.conf /boot/hw_intfc.conf
+
+RUN apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Run run_pkt script
 ENTRYPOINT ["sh", "/opt/iotloragateway/packet_forwarder/run_pkt.sh"]

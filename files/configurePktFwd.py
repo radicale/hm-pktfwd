@@ -128,7 +128,9 @@ gpioResetSED = "s/SX1302_RESET_PIN=../SX1302_RESET_PIN={}/g".format(reset_pin)
 subprocess.run(["/bin/sed", "-i", gpioResetSED, "/opt/iotloragateway/packet_forwarder/reset_lgw.sh"])  # nosec (B603)
 
 while True:
-
+    print("Hardware Variant {} detected".format(variant))
+    print("RESET: {}".format(reset_pin))
+    print("SPI: {}".format(spi_bus))
     euiPATH = ["/opt/iotloragateway/packet_forwarder/sx1302/util_chip_id/chip_id", "-d", "/dev/{}".format(spi_bus)]
     euiTest = subprocess.run(euiPATH, capture_output=True, text=True).stdout  # nosec (B603)
 
