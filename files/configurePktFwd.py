@@ -9,7 +9,18 @@ from hm_hardware_defs.variant import variant_definitions
 from time import sleep
 
 variant = os.getenv('VARIANT')
-variant_variables = variant_definitions[variant]
+variant_variables = {
+    'FRIENDLY': 'Nebra Hotspot HAT RockPi 4',
+    'APPNAME': 'RockPi',
+    'SPIBUS': 'spidev32766.0',
+    'RESET': 149,
+    'MAC': 'eth0',
+    'STATUS': 156,
+    'BUTTON': 154,
+    'ECCOB': True,
+    'TYPE': 'Full',
+    'CELLULAR': False
+}
 # Reset pin is on this GPIO
 reset_pin = variant_variables['RESET']
 # And SPI on this bus
@@ -40,7 +51,7 @@ with open("/var/pktfwd/diagnostics", 'w') as diagOut:
 
 print("Frequency Checking")
 
-regionID = None
+regionID = 'US915'
 while(regionID is None):
     # While no region specified
 

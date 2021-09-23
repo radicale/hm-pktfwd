@@ -108,16 +108,17 @@ COPY files/* .
 COPY --from=builder /opt/iotloragateway/dev/venv /opt/iotloragateway/dev/venv
 ENV PATH="/opt/iotloragateway/dev/venv/bin:$PATH"
 
-RUN apt-get install wget
-RUN echo "deb http://apt.radxa.com/buster-stable/ buster main" | tee -a /etc/apt/sources.list.d/apt-radxa-com.list
-RUN wget -O - apt.radxa.com/buster-stable/public.key | apt-key add -
-RUN apt-get update && apt-get install -y rockchip-overlay rockpi4-dtbo
-RUN rm /boot/hw_intfc.conf
-COPY hw_intfc.conf /boot/hw_intfc.conf
+# RUN apt-get install wget
+# RUN echo "deb http://apt.radxa.com/buster-stable/ buster main" | tee -a /etc/apt/sources.list.d/apt-radxa-com.list
+# RUN wget -O - apt.radxa.com/buster-stable/public.key | apt-key add -
+# RUN apt-get update && apt-get install -y rockchip-overlay rockpi4-dtbo
+# RUN rm /boot/hw_intfc.conf
+# COPY hw_intfc.conf /boot/hw_intfc.conf
 
 RUN apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Run run_pkt script
-ENTRYPOINT ["sh", "/opt/iotloragateway/packet_forwarder/run_pkt.sh"]
+# ENTRYPOINT ["sh", "/opt/iotloragateway/packet_forwarder/run_pkt.sh"]
+ENTRYPOINT ["/bin/bash"]
