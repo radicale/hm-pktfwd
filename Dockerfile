@@ -40,8 +40,17 @@ COPY buildfiles buildfiles
 COPY sx1302fixes sx1302fixes
 
 # Clone the lora gateway and packet forwarder repos
-RUN git clone https://github.com/NebraLtd/lora_gateway.git
-RUN git clone https://github.com/NebraLtd/packet_forwarder.git
+# hadolint ignore=DL3003
+RUN git clone https://github.com/NebraLtd/lora_gateway.git && \
+        cd lora_gateway && \
+        git checkout 971c52e3e0f953102c0b057c9fff9b1df8a84d66 && \
+        cd ..
+
+# hadolint ignore=DL3003
+RUN git clone https://github.com/NebraLtd/packet_forwarder.git && \
+        cd packet_forwarder && \
+        git checkout c43e727fc578a0685a428c6e3a775cdf7e80f860 && \
+        cd ..
 
 # Create folder needed by packetforwarder compiler
 RUN mkdir -p /opt/iotloragateway/packetforwarder
