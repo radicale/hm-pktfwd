@@ -55,11 +55,11 @@ COPY reset_lgw.sh "$RESET_LGW_FILEPATH"
 
 # Copy sx1301 lora_pkt_fwd_SPI_BUS
 # hadolint ignore=DL3022
-COPY --from=nebraltd/packet_forwarder:e8f24fe37ba555e5ad1ddf8eed26d0136f30f8de "$SX1301_PACKET_FORWARDER_OUTPUT_DIR" "$SX1301_DIR"
+COPY --from=radicale/packet_forwarder:e8f24fe37ba555e5ad1ddf8eed26d0136f30f8de "$SX1301_PACKET_FORWARDER_OUTPUT_DIR" "$SX1301_DIR"
 
 # Copy sx1302 chip_id, reset_lgw, and lora_pkt_fwd
 # hadolint ignore=DL3022
-COPY --from=nebraltd/sx1302_hal:9a72ce59c22b0434bdbaf9091542a7d8419bddee "$SX1302_HAL_OUTPUT_DIR" "$SX1302_DIR"
+COPY --from=radicale/sx1302_hal:9a72ce59c22b0434bdbaf9091542a7d8419bddee "$SX1302_HAL_OUTPUT_DIR" "$SX1302_DIR"
 
 # Copy pktfwd python app dependencies
 COPY --from=pktfwd-builder "$PKTFWD_BUILDER_OUTPUT_DIR" "$PYTHON_DEPENDENCIES_DIR"

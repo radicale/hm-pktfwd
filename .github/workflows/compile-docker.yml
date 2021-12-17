@@ -33,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            nebraltd/hm-pktfwd
+            radicale/hm-pktfwd
             ghcr.io/${{ github.repository }}
           flavor: |
             latest=true
